@@ -1,0 +1,60 @@
+<header class="header">
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  .header {
+    background-color: rgb(9, 86, 229);
+    padding: 1rem;
+    display: flex;
+    border-bottom: 1px solid #000;
+    border-bottom-color: gray;
+    width: 100%;
+  }
+  
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+
+  li {
+    font-family: 'Rubik';
+    color: #000;
+    margin: 0 1rem;
+    border-bottom: 2px solid transparent;
+  }
+
+  li:hover {
+    border-bottom-color: orange;
+  }
+
+  a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  a:hover {
+    opacity: 0.8;
+  }
+</style>

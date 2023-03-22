@@ -1,11 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
+import Header from '../components/Header.astro';
 ---
 
 <Layout title="Welcome to Astro.">
+	<Header/>
 	<main>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
+		<div class ="title-container">
+			<h1 class="title text-gradient">deck</h1>
+		</div>
 		<p class="instructions">
 			To get started, open the directory <code>src/pages</code> in your project.<br />
 			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
@@ -45,6 +49,32 @@ import Card from '../components/Card.astro';
 		font-size: 3rem;
 		font-weight: 800;
 		margin: 0;
+	}
+	.title {
+		overflow: hidden;
+		white-space: nowrap;
+		width: 0;
+		animation: typing 1.5s steps(30, end) forwards, blinking 0.5s infinite;
+		animation-duration: 1.5s;
+  		animation-fill-mode: forwards;
+		border-right: 2px solid
+		justify-content: center;
+	}
+	.title-container {
+		display: grid;
+		place-items: center;
+  		font-family: "arial";
+  		font-size: 24px;
+		width: 350px;
+	}
+	@keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+	@keyframes blinking {
+		0% {border-right-color: transparent}
+		50% {border-right-color: black}
+		100% {border-right-color: transparent}
 	}
 	.text-gradient {
 		background-image: var(--accent-gradient);
