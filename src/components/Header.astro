@@ -1,60 +1,92 @@
+---
+import HeaderButton from "./HeaderButton.astro";
+
+interface Props {
+  borderSize?: string;
+  borderColor?: string;
+  backgroundColor?: string;
+}
+
+const { borderSize = "0px", borderColor = "gray", backgroundColor = "transparent" } = Astro.props;
+---
+
 <header class="header">
-  <nav>
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/contact">Contact</a></li>
-    </ul>
-  </nav>
+  <div class="header__section header__section--left">
+    <HeaderButton label="Home" href="/"/>
+    <HeaderButton label="About" href="about"/>
+    <HeaderButton label="Contact" href="contact"/>
+  </div>
+  <div class="header__section header__section--right">
+    <HeaderButton label="Login" href="login"/>
+    <HeaderButton
+      label="Signup"
+      href="signup"
+      color="#fff"
+      borderColor="transparent"
+      backgroundImage="linear-gradient(45deg, #5f05fc, #8d05fc 50%)"
+      hoverColor = "#fff"
+      hoverBorderColor="transparent"
+    />
+  </div>
 </header>
 
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-  }
+<style define:vars={{ borderSize, borderColor, backgroundColor }}>
   .header {
-    background-color: rgb(9, 86, 229);
-    padding: 1rem;
     display: flex;
-    border-bottom: 1px solid #000;
-    border-bottom-color: gray;
-    width: 100%;
-  }
-  
-  nav {
-    display: flex;
+    position: sticky;
+    top: 0;
+    left: 0;
     justify-content: space-between;
     align-items: center;
-  }
-  
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-  }
-
-  li {
-    font-family: 'Rubik';
-    color: #000;
-    margin: 0 1rem;
-    border-bottom: 2px solid transparent;
-  }
-
-  li:hover {
-    border-bottom-color: orange;
-  }
-
-  a {
+    height: auto;
+    background-color: var(--backgroundColor);
     color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.2rem;
-    transition: opacity 0.2s ease-in-out;
+    padding: 0 70px;
+    border-bottom: var(--borderSize) solid var(--borderColor);
   }
-  
-  a:hover {
-    opacity: 0.8;
+
+  .header__section {
+    display: flex;
+    align-items: center;
+    padding: 15px 50px 20px 20px;
+  }
+
+  /* Media query for small screens */
+  @media only screen and (max-width: 810px) {
+    .header {
+      padding: 0 5px;
+    }
+    .header__section {
+      padding: 5px;
+    }
+    .signup__button {
+      font-size: 0.9rem;
+      padding: 3px 8px;
+    }
+    .header__section--right {
+      padding-left: 0;
+    }
   }
 </style>
+
+<script>
+  const header = document.querySelector('.header')!;
+
+  // Get the header height
+  const headerHeight = header.clientHeight;
+
+  // Add a scroll event listener
+  window.addEventListener('scroll', () => {
+    // Get the current vertical scroll position
+    const scrollPos = window.scrollY;
+
+    // Check if the user has scrolled past the header
+    if (scrollPos > headerHeight) {
+        // Add the "sticky" class to the header
+        header.classList.add('sticky');
+    } else {
+        // Remove the "sticky" class from the header
+        header.classList.remove('sticky');
+    }
+  });
+</script>

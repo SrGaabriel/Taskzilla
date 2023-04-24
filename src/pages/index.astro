@@ -1,42 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
 import Header from '../components/Header.astro';
+
+export const prerender = true;
 ---
 
-<Layout title="Welcome to Astro.">
-	<Header/>
-	<main>
-		<div class ="title-container">
-			<h1 class="title text-gradient">deck</h1>
-		</div>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
-	</main>
+<Layout title="Taskzilla">
+	<div class="initial-background">
+		<main>
+			<div class ="central-box">
+				<div class ="title-container">
+					<span id="text" class="text-gradient unselectable"></span>
+					<span id="cursor" class=" unselectable">_</span>
+				</div>
+				<p class="subtitle">A modern task manager for modern people</p> 
+				<button class="get-started-button">Get started organizing your life</button>
+			</div>
+		</main>
+	</div>
 </Layout>
 
 <style>
@@ -44,37 +25,91 @@ import Header from '../components/Header.astro';
 		margin: auto;
 		padding: 1.5rem;
 		max-width: 60ch;
+		display: flex;
+	}
+	html, body {
+		height: 100%;
+	}
+	body {
+		margin: 0;
 	}
 	h1 {
-		font-size: 3rem;
+		font-size: 3vw;
 		font-weight: 800;
 		margin: 0;
 	}
-	.title {
-		overflow: hidden;
-		white-space: nowrap;
-		width: 0;
-		animation: typing 1.5s steps(30, end) forwards, blinking 0.5s infinite;
-		animation-duration: 1.5s;
-  		animation-fill-mode: forwards;
-		border-right: 2px solid
+	.initial-background {
+		background-image:url("../../assets/images/mountain.jpg");
+		background-size: 100%;
+		background-position: center;
+		background-attachment: fixed;
+		width: 100%;
+		height: 1500px;
+		background-size: cover;
+	}
+	.central-box {
+		display: inline-block;
+		text-align: center;
 		justify-content: center;
+		align-items: center;
+ 		margin: 0 auto;
+	}
+	.subtitle {
+		font-family: 'Roboto';
+		color: white;
+		font-size: 20px;
+	}
+	.title {
+		display: inline-block;
+		position: relative;
+		overflow: hidden;
+		border-bottom: 2px solid transparent;
+		white-space: nowrap;
+		animation: typing 1.5s steps(30, end) forwards;
 	}
 	.title-container {
-		display: grid;
-		place-items: center;
-  		font-family: "arial";
-  		font-size: 24px;
-		width: 350px;
+		padding: 10px;
+		color: white;
+		font-family: 'Rubik';
+		font-size: 58px;
+	}
+	#cursor {
+		width: 100%;
+		height: 100%;
+		animation: blink 1.1s infinite;
+		font-size: 38px;
+		color: white;
+	}
+	.get-started-button {
+		margin-top: 20px;
+		border-color: transparent;
+		background-image: var(--accent-gradient);
+		color: white;
+		border: none;
+		border-radius: 5px;
+		padding: 10px 20px;
+		font-size: 20px;
+		font-family: 'Roboto';
+		cursor: pointer;
+		transition: box-shadow 0.37s ease-in-out;
+	}
+	.get-started-button:hover {
+		box-shadow: 0 0 20px #000;
 	}
 	@keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
+        from { width: 0; }
+        to { width: 100% }
     }
-	@keyframes blinking {
-		0% {border-right-color: transparent}
-		50% {border-right-color: black}
-		100% {border-right-color: transparent}
+	@keyframes blink {
+		0% {
+			opacity: 0;
+		}
+		50% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
 	}
 	.text-gradient {
 		background-image: var(--accent-gradient);
@@ -83,29 +118,18 @@ import Header from '../components/Header.astro';
 		background-size: 400%;
 		background-position: 0%;
 	}
-	.instructions {
-		line-height: 1.6;
-		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
-	}
-	.instructions code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
-	}
 </style>
+
+<script>
+	const text = "Taskzilla";
+	const speed = 150;
+
+	let i = 0;
+	const typing = setInterval(() => {
+		document.getElementById("text")!!.textContent += text.charAt(i);
+		i++;
+		if (i === text.length) {
+			clearInterval(typing);
+		}
+	}, speed);
+</script>

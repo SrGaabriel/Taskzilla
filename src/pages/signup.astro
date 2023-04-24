@@ -1,0 +1,57 @@
+---
+import Header from "../components/Header.astro";
+import Layout from "../layouts/Layout.astro";
+import AuthLayout from "../components/login/AuthLayout.astro";
+---
+
+<Layout title="Taskzilla | Signup">
+    <AuthLayout title="Sign up">
+        <p>Name</p>
+        <input type="text" name="name" placeholder="John Doe">
+        <p>Email</p>
+        <input type="text" name="email" placeholder="johndoe@gmail.com">
+        <p>Password</p>
+        <input type="password" name="password" placeholder="••••••••••••••••">
+    </AuthLayout>
+</Layout>
+
+<script>
+    import { checkInputIntegrity, addTokenToCookie, hideErrorPopup, displayErrorPopup } from '../scripts/login-commons.ts';
+
+    let submitButton = document.querySelector('.auth-container button')!!;
+    submitButton.addEventListener('click', () => {
+        hideErrorPopup();
+        let name = (document.querySelector('input[name="name"]') as HTMLInputElement);
+        let email = (document.querySelector('input[name="email"]') as HTMLInputElement);
+        let password = (document.querySelector('input[name="password"]') as HTMLInputElement);
+
+        let invalid = false;
+        if (checkInputIntegrity(name)) { invalid = true; }
+        if (checkInputIntegrity(email)) { invalid = true; }
+        if (checkInputIntegrity(password)) { invalid = true; }
+
+        if (invalid) {
+            displayErrorPopup('Please fill in all the fields');
+            return;
+        }
+
+        let data = {
+            name: name.value,
+            email: email.value,
+            password: password.value
+        }
+        fetch('http://localhost:3001/api/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(res => res.json()).then(data => {
+            if (data.error) {
+                displayErrorPopup(data.error);
+            } else {
+                addTokenToCookie(data.token);
+            }
+        });
+    });
+</script>

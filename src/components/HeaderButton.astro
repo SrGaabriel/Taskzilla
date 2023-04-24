@@ -1,0 +1,59 @@
+---
+interface Props {
+    label: string;
+    color?: string;
+    borderColor?: string;
+    backgroundImage?: string;
+    hoverColor?: string;
+    hoverBorderColor?: string;
+    href?: string;
+}
+
+const { label, color="#e8eae5", borderColor={color}, backgroundImage="transparent", href, hoverColor="#aaa9a9", hoverBorderColor={hoverColor} } = Astro.props;
+---
+
+<a href={href}><button>{label}</button></a>
+
+<style define:vars={{ color, borderColor, backgroundImage, hoverColor, hoverBorderColor }}>
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    button {
+        margin-top: 11px;
+        margin-left: 25px;
+        padding: 8px 16px;
+        font-family: 'Rubik';
+        border: 2px solid transparent;
+        border-style: solid;
+        border-color: var(--borderColor);
+        background-image: var(--backgroundImage);
+        background-color: transparent;
+        color: var(--color);
+        font-weight: bold;
+        font-size: 1.3rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: opacity 0.2s ease-in-out, color 0.4s ease-in-out, border-color 0.4s ease-in-out, background-color 0.4s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+    button:hover {
+        color: var(--hoverColor);
+        border-color: var(--hoverBorderColor);
+        box-shadow: 0 0 20px #000;
+    }
+
+    button:last-child {
+        margin-right: 0;
+    }
+
+    @media only screen and (max-width: 810px) {
+        button {
+            margin-top: 5px;
+            margin-left: 5px;
+            font-size: 0.9rem;
+            padding: 3px 8px;
+        }
+    }
+</style>
